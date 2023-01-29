@@ -20,5 +20,3 @@ Alternatively, a `Dockerfile` is provided to produce a docker image.
 
 The build will run the tests, generate a stand-alone `jar` file, and finally produce a (smallish) image that can be
 executed (without arguments) to run the program.
-
-## TODO algorithm etc
