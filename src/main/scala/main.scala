@@ -7,8 +7,7 @@ type Path = Seq[Triangle]
 
 case class Triangle(value: Item, children: Seq[Triangle], cost: Int):
 
-  def minimalPath: Path = ???
-
+  def minimalPath: Path = this +: (if (children.isEmpty) Seq.empty else children.minBy(_.cost).minimalPath)
 
 object Triangle {
   def fromFile(data: Seq[String]): Triangle = {

@@ -17,13 +17,10 @@ class MainTest extends AnyFunSuite:
     assert(Triangle.fromFile(data).cost == 18)
   }
 
-  test("7 + 6 + 3 + 2 = 18 is the minimal path.") (pending)
-//  {
-//    val triangle = Triangle.fromFile(data)
-//    val minPath = triangle.minimalPath
-//    assert(minPath.sum == 18)
-//    assert(minPath.head == 7)
-//    assert(minPath.last == 2)
-//  }
+  test("(7, 6, 3, 2) is the minimal path.") {
+    val triangle = Triangle.fromFile(data)
+    val minPath = triangle.minimalPath
+    assert(minPath.map(_.value).toList == List(7, 6, 3, 2))
+  }
 
 
