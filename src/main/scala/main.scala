@@ -1,5 +1,8 @@
 package it.albx79
 
+import java.io.IOException
+import scala.collection.mutable.ListBuffer
+import scala.io.StdIn
 import scala.sys.process.processInternal
 
 type Item = Int
@@ -41,5 +44,7 @@ object Triangle {
 
 @main
 def main(): Unit = {
-  println("Hello world!")
+  val lines = Iterator.continually(StdIn.readLine()).takeWhile(_ != null)
+  val triangle = Triangle.fromFile(lines.toSeq)
+  println(s"Minimal path is: ${triangle.minimalPath.map(_.value).mkString(" + ")} = ${triangle.cost}")
 }
