@@ -8,9 +8,13 @@ class MainTest extends AnyFunSuite:
 
   test("We can store the triangle in a text file with each row on a separate one minimal path line, and spaces between the numbers.") {
     val triangle = Triangle.fromFile(data)
-    assert(triangle.node.value == 7)
-    assert(triangle.children(1).children(1).children(1).node.value == 9)
-    assert(triangle.children.head.children.head.children.head.node.value == 11)
+    assert(triangle.value == 7)
+    assert(triangle.children(1).children(1).children(1).value == 9)
+    assert(triangle.children.head.children.head.children.head.value == 11)
+  }
+
+  test("The cost associated to a triangle is the cost of the minimal path") {
+    assert(Triangle.fromFile(data).cost == 18)
   }
 
   test("7 + 6 + 3 + 2 = 18 is the minimal path.") (pending)

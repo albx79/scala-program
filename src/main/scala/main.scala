@@ -3,42 +3,40 @@ package it.albx79
 import scala.sys.process.processInternal
 
 type Item = Int
-type Path = Seq[Node]
+type Path = Seq[Triangle]
 
-case class Node(value: Item, children: Option[(Node, Node)])
-
-case class Triangle(node: Node):
-  def children: List[Triangle] = node.children match
-    case Some((c1, c2)) => List(Triangle(c1), Triangle(c2))
-    case None => List.empty
+case class Triangle(value: Item, children: Seq[Triangle], cost: Int):
 
   def minimalPath: Path = ???
 
 
 object Triangle {
   def fromFile(data: Seq[String]): Triangle = {
-    val tempNodes: List[List[Node]] = data.map(s => s.split(" ").map(n => Node(n.toInt, None)).toList).toList
+    val tempNodes: List[List[Int]] = data.map(s => s.split(" ").map(n => n.toInt).toList).toList
 
-    def connectChildren(heads: List[Node], children: List[Node]): List[Node] = {
+    def connectChildren(heads: List[Int], children: List[Triangle]): List[Triangle] = {
       if (heads.length != children.length - 1) {
-        println("Heads: " + heads)
-        println("Children: " + children)
-        throw new IllegalArgumentException()
+        throw new IllegalArgumentException(s"Heads: $heads\nChildren: $children")
       }
-      heads.zipWithIndex.map {
-        case (head, index) => head.copy(children = Some((children(index), children(index + 1))))
+      heads.zipWithIndex.map { case (head, index) =>
+        val c1 = children(index)
+        val c2 = children(index + 1)
+        Triangle(
+          value = head,
+          children = Seq(c1, c2),
+          cost = Math.min(c1.cost, c2.cost) + head
+        )
       }
     }
 
     val reversed = tempNodes.reverse
-    val bottomRow = reversed.head
+    val bottomRow: List[Triangle] = reversed.head.map(n => Triangle(value = n, children = Seq.empty, cost = n))
     val topRows = reversed.tail.reverse
 
-    val connected = topRows
+    topRows
       .foldRight(bottomRow)(connectChildren)
       .reverse
-
-    Triangle(connected.head)
+      .head
   }
 }
 
