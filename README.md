@@ -33,6 +33,6 @@ executed (without arguments) to run the program.
     time java -jar target/scala-3.2.1/exercise.jar < src/test/resources/data_big.txt > /dev/null
 
     ________________________________________________________
-    Executed in    8,17 secs    fish           external
-    usr time    9,46 secs  871,00 micros    9,46 secs
-    sys time    0,21 secs  254,00 micros    0,21 secs
+    Executed in  787,20 millis    fish           external
+    usr time    2,04 secs    394,00 micros    2,04 secs
+    sys time    0,25 secs    132,00 micros    0,25 secs

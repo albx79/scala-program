@@ -9,14 +9,15 @@ type Item = Int
 type Path = Seq[Triangle]
 
 case class Triangle(value: Item, children: Seq[Triangle], cost: Int):
+  require(children.isEmpty || children.length == 2)
 
   def minimalPath: Path = this +: (if (children.isEmpty) Seq.empty else children.minBy(_.cost).minimalPath)
 
 object Triangle {
   def fromFile(data: Seq[String]): Triangle = {
-    val tempNodes: List[List[Int]] = data.map(s => s.split(" ").map(n => n.toInt).toList).toList
+    val tempNodes = data.map(s => s.split(" ").map(n => n.toInt).toVector)
 
-    def connectChildren(heads: List[Int], children: List[Triangle]): List[Triangle] = {
+    def connectChildren(heads: Seq[Int], children: Seq[Triangle]): Seq[Triangle] = {
       if (heads.length != children.length - 1) {
         throw new IllegalArgumentException(s"Heads: $heads\nChildren: $children")
       }
@@ -32,7 +33,7 @@ object Triangle {
     }
 
     val reversed = tempNodes.reverse
-    val bottomRow: List[Triangle] = reversed.head.map(n => Triangle(value = n, children = Seq.empty, cost = n))
+    val bottomRow = reversed.head.map(n => Triangle(value = n, children = Seq.empty, cost = n))
     val topRows = reversed.tail.reverse
 
     topRows
