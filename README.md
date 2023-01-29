@@ -1,6 +1,6 @@
-# Title
+# Minimal Path of Triangle
 
-This project does this and that.
+This project calculates the minimal path in a triangle of numbers.
 
 ## Building
 
